@@ -1,4 +1,4 @@
-# Quasar App (growsari)
+# Grow Sari
 
 A Quasar Framework app
 
