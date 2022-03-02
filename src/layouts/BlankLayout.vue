@@ -11,18 +11,5 @@ import { defineComponent, ref } from "vue";
 
 export default defineComponent({
     name: "BlankLayout",
-
-    setup() {
-        const leftDrawerOpen = ref(false);
-
-        return {
-            mainNavs: mainNavs,
-            secondarynavs: secondarynavs,
-            leftDrawerOpen,
-            toggleLeftDrawer() {
-                leftDrawerOpen.value = !leftDrawerOpen.value;
-            },
-        };
-    },
 });
 </script>

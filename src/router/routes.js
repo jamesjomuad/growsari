@@ -1,9 +1,26 @@
+import { LocalStorage, SessionStorage } from "quasar";
+
+function authenticated(to, from, next) {
+    var isAuthenticated = false;
+    if (LocalStorage.getItem("LoggedUser")) isAuthenticated = true;
+    else isAuthenticated = false;
+    if (isAuthenticated) {
+        next();
+    } else {
+        next("/signin");
+    }
+}
+
 const routes = [
     {
         path: "/",
+        beforeEnter: authenticated,
         component: () => import("layouts/MainLayout.vue"),
         children: [
-            { path: "", component: () => import("pages/Index.vue") },
+            {
+                path: "",
+                component: () => import("pages/Index.vue"),
+            },
             { path: "orders", component: () => import("src/pages/Orders.vue") },
             {
                 path: "products",
@@ -22,13 +39,21 @@ const routes = [
     },
 
     {
-        path: "/login",
+        path: "/signin",
         component: () => import("layouts/BlankLayout.vue"),
-        children: [{ path: "", component: () => import("pages/Login.vue") }],
+        children: [
+            { path: "", component: () => import("src/pages/Signin.vue") },
+        ],
     },
 
-    // Always leave this as last one,
-    // but you can also remove it
+    {
+        path: "/signup",
+        component: () => import("layouts/BlankLayout.vue"),
+        children: [
+            { path: "", component: () => import("src/pages/Signup.vue") },
+        ],
+    },
+
     {
         path: "/:catchAll(.*)*",
         component: () => import("pages/Error404.vue"),
