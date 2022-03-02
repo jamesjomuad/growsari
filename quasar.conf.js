@@ -23,7 +23,7 @@ module.exports = configure(function (ctx) {
     // https://quasar.dev/quasar-cli/boot-files
     boot: [
       "axios",
-      { path: "express", client: false },
+      // { path: "express", client: false },
       // { path: "some-other", server: false }, // this boot file gets embedded only on client-side
     ],
 
