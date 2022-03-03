@@ -17,10 +17,9 @@ app.get("/", (req, res) => {
     res.send("Hello World!");
 });
 
-// Signup
+// User Signup
 app.post("/user", async (req, res) => {
     const payload = req.body;
-    console.log(payload);
     try {
         const result = await User.create(payload);
         res.json(result);
@@ -30,11 +29,35 @@ app.post("/user", async (req, res) => {
     }
 });
 
+// User Get
+app.get("/users", async (req, res) => {
+    // const payload = req.body;
+    try {
+        const result = await User.findAll();
+        res.json(result);
+    } catch (error) {
+        res.json(error);
+    }
+});
+
 // Create Product
 app.post("/product", async (req, res) => {
     const payload = req.body;
+    console.log(payload);
     try {
         const result = await Product.create(payload);
+        res.json(result);
+    } catch (error) {
+        res.json(error);
+    }
+});
+
+// Get Product
+app.get("/product", async (req, res) => {
+    // const payload = req.body;
+    try {
+        const result = await Product.findAll();
+        console.log(result);
         res.json(result);
     } catch (error) {
         res.json(error);
