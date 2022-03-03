@@ -23,7 +23,7 @@
                             <q-input
                                 square
                                 clearable
-                                v-model="formData.fullname"
+                                v-model="formData.fullName"
                                 type="text"
                                 label="Full Name"
                                 :rules="[(val) => !!val || 'Field is required']"
@@ -98,7 +98,7 @@ export default {
     data() {
         return {
             formData: {
-                fullname: null,
+                fullName: null,
                 email: null,
                 username: null,
                 password: null,
@@ -107,8 +107,16 @@ export default {
     },
 
     methods: {
-        signup() {
-            console.log(this.formData);
+        async signup() {
+            this.$api.post("/user", this.formData).then(({ data }) => {
+                if (data) {
+                    this.$q.notify({
+                        message: `${data.username} successfully registered!`,
+                        color: "orange",
+                    });
+                    this.$router.push("/signin");
+                }
+            });
         },
     },
 };

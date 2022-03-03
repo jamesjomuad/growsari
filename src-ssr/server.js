@@ -5,13 +5,13 @@ const cors = require("cors");
 const port = 3000;
 const { User, Product } = require("./models/index.js");
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(
     cors({
         origin: "*",
     })
 );
-
-app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
     res.send("Hello World!");
@@ -20,8 +20,8 @@ app.get("/", (req, res) => {
 // User Signup
 app.post("/user", async (req, res) => {
     const payload = req.body;
+    console.log("payload: ", payload);
     try {
-        console.log(User);
         const result = await User.create(payload);
         res.json(result);
     } catch (error) {
