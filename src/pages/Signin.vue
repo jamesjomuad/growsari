@@ -61,6 +61,8 @@
 </template>
 
 <script>
+import { LocalStorage } from "quasar";
+
 export default {
     name: "PageSignin",
     data() {
@@ -72,15 +74,23 @@ export default {
 
     methods: {
         login() {
-            this.$api.post("/auth", this.formData).then(({ data }) => {
-                if (data) {
-                    this.$q.notify({
-                        message: `${data.username} successfully registered!`,
-                        color: "orange",
-                    });
-                    this.$router.push("/signin");
-                }
-            });
+            this.$api
+                .post("/auth", {
+                    username: this.username,
+                    password: this.password,
+                })
+                .then(({ data }) => {
+                    if (data) {
+                        console.log(data);
+                        LocalStorage.set("jwt", data.token);
+                        this.$q.notify({
+                            message: `${data.username} signing up!`,
+                            color: "orange",
+                        });
+
+                        this.$router.push("/");
+                    }
+                });
         },
     },
 };

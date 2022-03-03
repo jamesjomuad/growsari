@@ -1,7 +1,14 @@
 <template>
     <q-page padding>
         <!-- content -->
-        <h2 class="text-h4 q-ma-none">Products</h2>
+        <div class="q-pa-md">
+            <q-table
+                title="Products"
+                :rows="rows"
+                :columns="columns"
+                row-key="name"
+            />
+        </div>
     </q-page>
 </template>
 

@@ -75,7 +75,7 @@
                                 size="lg"
                                 color="blue-8"
                                 class="full-width text-white"
-                                label="Get Started"
+                                label="Sign Up"
                                 type="submit"
                             />
                         </q-card-actions>
@@ -111,8 +111,8 @@ export default {
             this.$api.post("/user", this.formData).then(({ data }) => {
                 if (data) {
                     this.$q.notify({
-                        message: `${data.username} successfully registered!`,
-                        color: "orange",
+                        message: `${data.username} successfully signup!`,
+                        color: "info",
                     });
                     this.$router.push("/signin");
                 }

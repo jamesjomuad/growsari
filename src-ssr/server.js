@@ -1,10 +1,15 @@
-const CryptoJS = require("crypto-js");
 const express = require("express");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const bodyParser = require("body-parser");
 const app = express();
 const cors = require("cors");
 const port = 3000;
+const secretKey = "ErVGY39nT52NzHT";
+
+const { Op } = require("sequelize");
 const { User, Product } = require("./models/index.js");
+const { response } = require("express");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -14,16 +19,11 @@ app.use(
     })
 );
 
-const encrypt = (src) => {
-    const passphrase = "ErVGY39nT52NzHT"; //Salt
-    return CryptoJS.AES.encrypt(src, passphrase).toString();
-};
-
-const decrypt = (src) => {
-    const passphrase = "ErVGY39nT52NzHT"; //Salt
-    const bytes = CryptoJS.AES.decrypt(src, passphrase);
-    const originalText = bytes.toString(CryptoJS.enc.Utf8);
-    return originalText;
+const createToken = (id) => {
+    var maxAge = 3 * 24 * 60 * 60;
+    return jwt.sign({ id }, secretKey, {
+        expiresIn: maxAge,
+    });
 };
 
 app.get("/", (req, res) => {
@@ -31,15 +31,23 @@ app.get("/", (req, res) => {
 });
 
 //User authentication/login
-app.post("/login", async (req, res) => {
+app.post("/auth", async (req, res) => {
     const { username, password } = req.body;
-    const hashedPassword = decrypt(password);
-
+    console.log("Request", req.body);
     try {
         const user = await User.findOne({
-            where: { username: username, password: password },
+            attributes: ["username", "email", "fullName", "password"],
+            where: { username },
         });
-        res.json(user);
+
+        if (user && (await bcrypt.compare(password, user.password))) {
+            const response = {
+                ...user.dataValues,
+                token: createToken(user.id),
+            };
+            delete response.password;
+            res.json(response);
+        }
     } catch (error) {
         console.error(error);
         res.json(error);
@@ -49,8 +57,10 @@ app.post("/login", async (req, res) => {
 // User Signup
 app.post("/user", async (req, res) => {
     const payload = req.body;
-    payload.password = encrypt(payload.password);
+
     try {
+        payload.password = await bcrypt.hash(payload.password, 10);
+        console.log(payload.password);
         const result = await User.create(payload);
         res.json(result);
     } catch (error) {
