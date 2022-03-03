@@ -1,28 +1,32 @@
 <template>
     <q-page
         padding
-        class="window-height window-width row justify-center items-center"
+        class="bg-signup window-height window-width row justify-center items-center"
     >
         <div class="column q-pa-lg">
             <div class="row">
-                <q-card square class="shadow-24" style="width: 350px">
-                    <q-card-section class="bg-deep-purple-7">
-                        <h4 class="text-h5 text-white q-my-md">Registration</h4>
-                        <div
-                            class="absolute-bottom-right q-pr-md"
-                            style="transform: translateY(50%)"
-                        >
-                            <q-btn fab icon="account_circle" color="purple-4" />
-                        </div>
-                    </q-card-section>
-                    <q-card-section>
-                        <q-form class="q-px-sm q-pt-xl q-pb-lg">
+                <q-form
+                    class="q-px-sm q-pt-xl q-pb-lg"
+                    @submit.prevent="signup"
+                >
+                    <q-card class="shadow-24" style="width: 350px">
+                        <q-card-section class="bg-blue">
+                            <h4 class="text-h5 text-white q-my-md">Signup</h4>
+                            <div
+                                class="absolute-bottom-right q-pr-md"
+                                style="transform: translateY(50%)"
+                            >
+                                <q-btn fab icon="account_circle" color="blue" />
+                            </div>
+                        </q-card-section>
+                        <q-card-section>
                             <q-input
                                 square
                                 clearable
-                                v-model="fullname"
+                                v-model="formData.fullname"
                                 type="text"
                                 label="Full Name"
+                                :rules="[(val) => !!val || 'Field is required']"
                             >
                                 <template v-slot:prepend>
                                     <q-icon name="badge" />
@@ -31,9 +35,10 @@
                             <q-input
                                 square
                                 clearable
-                                v-model="email"
+                                v-model="formData.email"
                                 type="email"
                                 label="Email"
+                                :rules="[(val) => !!val || 'Field is required']"
                             >
                                 <template v-slot:prepend>
                                     <q-icon name="email" />
@@ -42,9 +47,10 @@
                             <q-input
                                 square
                                 clearable
-                                v-model="username"
+                                v-model="formData.username"
                                 type="username"
                                 label="Username"
+                                :rules="[(val) => !!val || 'Field is required']"
                             >
                                 <template v-slot:prepend>
                                     <q-icon name="person" />
@@ -53,31 +59,33 @@
                             <q-input
                                 square
                                 clearable
-                                v-model="password"
+                                v-model="formData.password"
                                 type="password"
                                 label="Password"
+                                :rules="[(val) => !!val || 'Field is required']"
                             >
                                 <template v-slot:prepend>
                                     <q-icon name="lock" />
                                 </template>
                             </q-input>
-                        </q-form>
-                    </q-card-section>
-                    <q-card-actions class="q-px-lg">
-                        <q-btn
-                            unelevated
-                            size="lg"
-                            color="purple-4"
-                            class="full-width text-white"
-                            label="Get Started"
-                        />
-                    </q-card-actions>
-                    <q-card-section class="text-center q-pa-sm">
-                        <p class="text-grey-6">
-                            <a href="/signin">Sign In</a>
-                        </p>
-                    </q-card-section>
-                </q-card>
+                        </q-card-section>
+                        <q-card-actions class="q-px-lg">
+                            <q-btn
+                                unelevated
+                                size="lg"
+                                color="blue-8"
+                                class="full-width text-white"
+                                label="Get Started"
+                                type="submit"
+                            />
+                        </q-card-actions>
+                        <q-card-section class="text-center q-pa-sm">
+                            <p class="text-grey-6">
+                                <a href="/signin">Sign In</a>
+                            </p>
+                        </q-card-section>
+                    </q-card>
+                </q-form>
             </div>
         </div>
     </q-page>
@@ -86,5 +94,31 @@
 <script>
 export default {
     name: "PageSignup",
+
+    data() {
+        return {
+            formData: {
+                fullname: null,
+                email: null,
+                username: null,
+                password: null,
+            },
+        };
+    },
+
+    methods: {
+        signup() {
+            console.log(this.formData);
+        },
+    },
 };
 </script>
+
+<style scoped>
+.bg-signup {
+    background-image: url("~assets/undraw_empty_cart_co35.svg");
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    background-size: 30%;
+}
+</style>
