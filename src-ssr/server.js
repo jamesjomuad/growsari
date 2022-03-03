@@ -21,6 +21,7 @@ app.get("/", (req, res) => {
 app.post("/user", async (req, res) => {
     const payload = req.body;
     try {
+        console.log(User);
         const result = await User.create(payload);
         res.json(result);
     } catch (error) {
