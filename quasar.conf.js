@@ -23,7 +23,7 @@ module.exports = configure(function (ctx) {
         // https://quasar.dev/quasar-cli/boot-files
         boot: [
             "axios",
-            // { path: "express", client: false },
+            // { path: "encrypt", client: false },
             // { path: "some-other", server: false }, // this boot file gets embedded only on client-side
         ],
 
@@ -105,7 +105,6 @@ module.exports = configure(function (ctx) {
 
         // animations: 'all', // --- includes all animations
         // https://quasar.dev/options/animations
-        animations: "all",
 
         // https://quasar.dev/quasar-cli/developing-ssr/configuring-ssr
         ssr: {

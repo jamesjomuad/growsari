@@ -1,3 +1,4 @@
+const CryptoJS = require("crypto-js");
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
@@ -13,14 +14,42 @@ app.use(
     })
 );
 
+const encrypt = (src) => {
+    const passphrase = "ErVGY39nT52NzHT"; //Salt
+    return CryptoJS.AES.encrypt(src, passphrase).toString();
+};
+
+const decrypt = (src) => {
+    const passphrase = "ErVGY39nT52NzHT"; //Salt
+    const bytes = CryptoJS.AES.decrypt(src, passphrase);
+    const originalText = bytes.toString(CryptoJS.enc.Utf8);
+    return originalText;
+};
+
 app.get("/", (req, res) => {
     res.send("Hello World!");
+});
+
+//User authentication/login
+app.post("/login", async (req, res) => {
+    const { username, password } = req.body;
+    const hashedPassword = decrypt(password);
+
+    try {
+        const user = await User.findOne({
+            where: { username: username, password: password },
+        });
+        res.json(user);
+    } catch (error) {
+        console.error(error);
+        res.json(error);
+    }
 });
 
 // User Signup
 app.post("/user", async (req, res) => {
     const payload = req.body;
-    console.log("payload: ", payload);
+    payload.password = encrypt(payload.password);
     try {
         const result = await User.create(payload);
         res.json(result);
