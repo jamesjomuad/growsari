@@ -1,13 +1,16 @@
 import { LocalStorage, SessionStorage } from "quasar";
-import jwt from "jsonwebtoken";
-const secretKey = "ErVGY39nT52NzHT";
 
 function isAuthenticated(to, from, next) {
     var isAuthenticated = false;
-    if (LocalStorage.getItem("jwt") && LocalStorage.getItem("jwt").length)
-        if (jwt.verify(token, secretKey)) {
-            isAuthenticated = true;
-        } else isAuthenticated = false;
+    if (LocalStorage.getItem("jwt") && LocalStorage.getItem("jwt").length) {
+        isAuthenticated = true;
+    } else {
+        isAuthenticated = false;
+    }
+    // if (jwt.verify(token, secretKey)) {
+    //     isAuthenticated = true;
+    // } else isAuthenticated = false;
+
     if (isAuthenticated) {
         next();
     } else {
