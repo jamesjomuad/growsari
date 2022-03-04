@@ -1,15 +1,11 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const bodyParser = require("body-parser");
 const app = express();
 const cors = require("cors");
 const port = 3000;
-const secretKey = "ErVGY39nT52NzHT";
-
-const { Op } = require("sequelize");
-const { User, Product } = require("./models/index.js");
-const { response } = require("express");
+const auth = require("./middlewares/auth");
+const { User, Product } = require("./models");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -19,13 +15,6 @@ app.use(
     })
 );
 
-const createToken = (id) => {
-    var maxAge = 3 * 24 * 60 * 60;
-    return jwt.sign({ id }, secretKey, {
-        expiresIn: maxAge,
-    });
-};
-
 app.get("/", (req, res) => {
     res.send("Hello World!");
 });
@@ -33,7 +22,6 @@ app.get("/", (req, res) => {
 //User authentication/login
 app.post("/auth", async (req, res) => {
     const { username, password } = req.body;
-    console.log("Request", req.body);
     try {
         const user = await User.findOne({
             attributes: ["username", "email", "fullName", "password"],
@@ -43,7 +31,7 @@ app.post("/auth", async (req, res) => {
         if (user && (await bcrypt.compare(password, user.password))) {
             const response = {
                 ...user.dataValues,
-                token: createToken(user.id),
+                token: createToken(user.username),
             };
             delete response.password;
             res.json(response);
@@ -60,7 +48,6 @@ app.post("/user", async (req, res) => {
 
     try {
         payload.password = await bcrypt.hash(payload.password, 10);
-        console.log(payload.password);
         const result = await User.create(payload);
         res.json(result);
     } catch (error) {
@@ -81,9 +68,8 @@ app.get("/users", async (req, res) => {
 });
 
 // Create Product
-app.post("/product", async (req, res) => {
+app.post("/product", auth.verified, async (req, res) => {
     const payload = req.body;
-    console.log(payload);
     try {
         const result = await Product.create(payload);
         res.json(result);
@@ -93,11 +79,10 @@ app.post("/product", async (req, res) => {
 });
 
 // Get Product
-app.get("/product", async (req, res) => {
+app.get("/product", auth.verified, async (req, res) => {
     // const payload = req.body;
     try {
         const result = await Product.findAll();
-        console.log(result);
         res.json(result);
     } catch (error) {
         res.json(error);

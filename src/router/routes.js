@@ -1,4 +1,5 @@
-import { LocalStorage, SessionStorage } from "quasar";
+import { LocalStorage } from "quasar";
+const Buffer = require("buffer/").Buffer;
 
 function isAuthenticated(to, from, next) {
     var isAuthenticated = false;
@@ -7,9 +8,6 @@ function isAuthenticated(to, from, next) {
     } else {
         isAuthenticated = false;
     }
-    // if (jwt.verify(token, secretKey)) {
-    //     isAuthenticated = true;
-    // } else isAuthenticated = false;
 
     if (isAuthenticated) {
         next();
