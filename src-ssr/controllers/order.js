@@ -1,24 +1,34 @@
-const { Order } = require("../models");
+const { Product, Order, OrderProducts } = require("../models");
 const auth = require("../middlewares/auth");
 
 async function add(req, res) {
     const userId = await auth.userId(req, res);
     const payload = req.body;
 
-    try {
-        console.log("userId: ", userId);
-        console.log("payload: ", payload);
+    Order.OrderProducts = OrderProducts.hasMany(Product);
+    OrderProducts.Order = OrderProducts.belongsTo(Order);
 
+    try {
         const result = await Order.create(
             {
                 customerID: 25,
-                OrderDetails: [{ id: 1 }, { id: 2 }, { id: 3 }],
+                OrderProducts: [
+                    { name: "4 Lorem", price: 55.6 },
+                    { name: "5 Lorem", price: 55.6 },
+                    { name: "6 Lorem", price: 55.6 },
+                ],
             },
             {
-                include: [OrderDetails],
+                include: [
+                    {
+                        association: Order.OrderProducts,
+                        include: [OrderProducts.Products],
+                    },
+                ],
             }
         );
         res.json(result);
+        console.log("result: ", result);
     } catch (error) {
         res.json(error);
     }

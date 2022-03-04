@@ -113,7 +113,7 @@ export default {
         async addOrder(props) {
             try {
                 const result = await this.$api.post("/order", {
-                    params: { id: props.row.id },
+                    id: props.row.id,
                 });
                 this.$q.notify({
                     message: `Order added!`,

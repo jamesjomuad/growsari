@@ -19,8 +19,6 @@ function verified(req, res, next) {
 
         req.user = user;
 
-        console.log("User: ", user);
-
         next();
     });
 }
