@@ -1,6 +1,7 @@
 <template>
     <q-page padding>
         <!-- content -->
+        <pre v-text="auth"></pre>
         <q-btn color="dark" label="Logout" @click="signout"></q-btn>
     </q-page>
 </template>
@@ -11,10 +12,6 @@ import { mapState } from "vuex";
 
 export default {
     name: "PageUser",
-
-    mounted() {
-        console.log(this.auth);
-    },
 
     computed: {
         ...mapState(["auth"]),

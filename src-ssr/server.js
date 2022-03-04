@@ -32,7 +32,7 @@ app.post("/user", controller.User.signup);
 //-----------
 //   User Get
 //-----------
-app.get("/users", controller.User.get);
+app.get("/users", auth.verified, controller.User.get);
 
 //-----------
 //   Create Product
