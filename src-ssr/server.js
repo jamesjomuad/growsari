@@ -14,35 +14,40 @@ app.use(
     })
 );
 
-//-----------
+//--------------------------
 //   Home
-//-----------
+//--------------------------
 app.get("/", controller.index);
 
-//-----------
+//--------------------------
 //  User authentication/login
-//-----------
+//--------------------------
 app.post("/auth", controller.User.signin);
 
-//-----------
+//--------------------------
 //   User Signup
-//-----------
+//--------------------------
 app.post("/user", controller.User.signup);
 
-//-----------
+//--------------------------
 //   User Get
-//-----------
+//--------------------------
 app.get("/users", auth.verified, controller.User.get);
 
-//-----------
+//--------------------------
 //   Create Product
-//-----------
+//--------------------------
 app.post("/product", auth.verified, controller.Product.post);
 
-//-----------
+//--------------------------
 //   Get Product
-//-----------
+//--------------------------
 app.get("/product", auth.verified, controller.Product.get);
+
+//--------------------------
+//   Add Order
+//--------------------------
+app.post("/order", auth.verified, controller.Order.add);
 
 // Open the port to public
 app.listen(port, () => {

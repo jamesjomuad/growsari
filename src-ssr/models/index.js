@@ -10,7 +10,7 @@ const config = {
     storage: "src-ssr/database.sqlite",
 };
 const db = {};
-const models = ["order.js", "orderdetails.js", "product.js", "user.js"];
+const models = ["order.js", "orderproducts.js", "product.js", "user.js"];
 
 let sequelize = new Sequelize(
     config.database,

@@ -3,17 +3,14 @@ const Buffer = require("buffer/").Buffer;
 
 function isAuthenticated(to, from, next) {
     var isAuthenticated = false;
+
     if (LocalStorage.getItem("jwt") && LocalStorage.getItem("jwt").length) {
         isAuthenticated = true;
-    } else {
-        isAuthenticated = false;
     }
 
-    if (isAuthenticated) {
-        next();
-    } else {
-        next("/signin");
-    }
+    if (isAuthenticated) next();
+
+    next("/signin");
 }
 
 const routes = [

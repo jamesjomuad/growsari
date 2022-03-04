@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import { LocalStorage } from "quasar";
 import { mapState } from "vuex";
 
 export default {
@@ -19,9 +18,10 @@ export default {
 
     methods: {
         signout() {
-            LocalStorage.remove("jwt");
+            this.$store.dispatch("auth/destroy");
             this.$router.push("/signin");
         },
     },
 };
 </script>
+/

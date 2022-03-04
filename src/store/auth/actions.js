@@ -16,3 +16,8 @@ export async function signinUser({ commit }, payload) {
         this.$router.push("/");
     }
 }
+
+export function destroy({ commit }, payload) {
+    LocalStorage.remove("jwt");
+    commit("clear");
+}

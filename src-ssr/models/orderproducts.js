@@ -3,13 +3,13 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-    class OrderDetails extends Model {
+    class OrderProducts extends Model {
         static associate(models) {
             // define association here
             this.Order = this.belongsTo(models.Order);
         }
     }
-    OrderDetails.init(
+    OrderProducts.init(
         {
             orderID: DataTypes.INTEGER,
             productID: DataTypes.INTEGER,
@@ -19,8 +19,8 @@ module.exports = (sequelize, DataTypes) => {
         },
         {
             sequelize,
-            modelName: "OrderDetails",
+            modelName: "OrderProducts",
         }
     );
-    return OrderDetails;
+    return OrderProducts;
 };
