@@ -1,20 +1,16 @@
 <template>
     <q-page padding>
         <!-- content -->
+        <pre v-text="auth"></pre>
         <q-btn color="dark" label="Logout" @click="signout"></q-btn>
     </q-page>
 </template>
 
 <script>
-import { LocalStorage } from "quasar";
 import { mapState } from "vuex";
 
 export default {
     name: "PageUser",
-
-    mounted() {
-        console.log(this.auth);
-    },
 
     computed: {
         ...mapState(["auth"]),
@@ -22,9 +18,10 @@ export default {
 
     methods: {
         signout() {
-            LocalStorage.remove("jwt");
+            this.$store.dispatch("auth/destroy");
             this.$router.push("/signin");
         },
     },
 };
 </script>
+/

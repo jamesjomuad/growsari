@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
 const token_secret = "ErVGY39nT52NzHT";
 
-function createToken(username) {
+function createToken(id) {
     var maxAge = 3 * 24 * 60 * 60;
-    return jwt.sign({ username }, token_secret, {
+    return jwt.sign({ id }, token_secret, {
         expiresIn: maxAge,
     });
 }
@@ -15,8 +15,6 @@ function verified(req, res, next) {
     if (token == null) return res.sendStatus(401);
 
     jwt.verify(token, token_secret, (err, user) => {
-        console.log(err);
-
         if (err) return res.sendStatus(403);
 
         req.user = user;
@@ -25,4 +23,13 @@ function verified(req, res, next) {
     });
 }
 
-module.exports = { createToken, verified };
+async function userId(req, res) {
+    try {
+        const authHeader = req.headers["authorization"];
+        const token = authHeader && authHeader.split(" ")[1];
+        const result = await jwt.verify(token, token_secret);
+        return result.id;
+    } catch (error) {}
+}
+
+module.exports = { createToken, verified, userId };

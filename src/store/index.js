@@ -1,7 +1,7 @@
 import { store } from "quasar/wrappers";
 import { createStore } from "vuex";
-// import createPersistedState from "vuex-persistedstate";
-
+import createPersistedState from "vuex-persistedstate";
+import { LocalStorage } from "quasar";
 import auth from "./auth";
 
 /*
@@ -19,7 +19,25 @@ export default store(function (/* { ssrContext } */) {
             auth,
         },
 
-        // plugins: [createPersistedState()],
+        plugins: [
+            createPersistedState({
+                paths: ["data"],
+                filter({ type }) {
+                    return type.startsWith("shared");
+                },
+                storage: {
+                    getItem(key) {
+                        return JSON.parse(LocalStorage.getItem(key));
+                    },
+                    setItem(key, value) {
+                        LocalStorage.set(key, JSON.stringify(value));
+                    },
+                    removeItem(key) {
+                        LocalStorage.remove(key);
+                    },
+                },
+            }),
+        ],
 
         // enable strict mode (adds overhead!)
         // for dev mode and --debug builds only

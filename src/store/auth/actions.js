@@ -10,9 +10,14 @@ export async function signinUser({ commit }, payload) {
         commit("setToken", data.token);
         LocalStorage.set("jwt", data.token);
         Notify.create({
-            message: `${data.username} signing up!`,
+            message: `Welcome to the Store ${data.username}`,
             color: "orange",
         });
         this.$router.push("/");
     }
+}
+
+export function destroy({ commit }, payload) {
+    LocalStorage.remove("jwt");
+    commit("clear");
 }
