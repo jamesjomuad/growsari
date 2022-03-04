@@ -15,7 +15,7 @@
                     style="width: 350px"
                     key="signin"
                 >
-                    <q-form class="q-gutter-md" @submit.prevent="login">
+                    <q-form class="q-gutter-md" @submit.prevent="signin">
                         <q-card-section>
                             <q-input
                                 square
@@ -73,24 +73,22 @@ export default {
     },
 
     methods: {
-        login() {
-            this.$api
-                .post("/auth", {
-                    username: this.username,
-                    password: this.password,
-                })
-                .then(({ data }) => {
-                    if (data) {
-                        console.log(data);
-                        LocalStorage.set("jwt", data.token);
-                        this.$q.notify({
-                            message: `${data.username} signing up!`,
-                            color: "orange",
-                        });
+        async signin() {
+            const { data } = await this.$api.post("/auth", {
+                username: this.username,
+                password: this.password,
+            });
 
-                        this.$router.push("/");
-                    }
+            if (data) {
+                LocalStorage.set("jwt", data.token);
+
+                this.$q.notify({
+                    message: `${data.username} signing up!`,
+                    color: "orange",
                 });
+
+                this.$router.push("/");
+            }
         },
     },
 };
