@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import { LocalStorage } from "quasar";
+import { mapActions } from "vuex";
 
 export default {
     name: "PageSignin",
@@ -73,22 +73,13 @@ export default {
     },
 
     methods: {
+        ...mapActions("auth", ["signinUser"]),
+
         async signin() {
-            const { data } = await this.$api.post("/auth", {
+            this.signinUser({
                 username: this.username,
                 password: this.password,
             });
-
-            if (data) {
-                LocalStorage.set("jwt", data.token);
-
-                this.$q.notify({
-                    message: `${data.username} signing up!`,
-                    color: "orange",
-                });
-
-                this.$router.push("/");
-            }
         },
     },
 };

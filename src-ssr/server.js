@@ -24,7 +24,7 @@ app.post("/auth", async (req, res) => {
     const { username, password } = req.body;
     try {
         const user = await User.findOne({
-            attributes: ["username", "email", "fullName", "password"],
+            attributes: ["id", "username", "email", "fullName", "password"],
             where: { username },
         });
 
