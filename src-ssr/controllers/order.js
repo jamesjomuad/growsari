@@ -5,8 +5,9 @@ async function add(req, res) {
     const userId = await auth.userId(req, res);
     const payload = req.body;
 
-    Order.OrderProducts = OrderProducts.hasMany(Product);
+    Order.OrderProducts = Order.hasMany(OrderProducts);
     OrderProducts.Order = OrderProducts.belongsTo(Order);
+    OrderProducts.Products = OrderProducts.hasMany(Product);
 
     try {
         const result = await Order.create(
