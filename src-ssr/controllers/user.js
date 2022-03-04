@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const auth = require("../middlewares/auth");
-const { User, Product, Order, OrderDetails } = require("../models");
+const { User } = require("../models");
 
 async function signin(req, res) {
     const { username, password } = req.body;

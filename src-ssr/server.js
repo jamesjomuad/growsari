@@ -1,12 +1,10 @@
 const express = require("express");
-const bcrypt = require("bcrypt");
 const bodyParser = require("body-parser");
 const app = express();
 const cors = require("cors");
 const port = 3000;
 const auth = require("./middlewares/auth");
 const controller = require("./controllers");
-const { User, Product, Order, OrderDetails } = require("./models");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
