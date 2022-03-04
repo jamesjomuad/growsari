@@ -7,9 +7,18 @@
 
 <script>
 import { LocalStorage } from "quasar";
+import { mapState } from "vuex";
 
 export default {
     name: "PageUser",
+
+    mounted() {
+        console.log(this.auth);
+    },
+
+    computed: {
+        ...mapState(["auth"]),
+    },
 
     methods: {
         signout() {
