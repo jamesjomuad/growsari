@@ -31,7 +31,7 @@ app.post("/auth", async (req, res) => {
         if (user && (await bcrypt.compare(password, user.password))) {
             const response = {
                 ...user.dataValues,
-                token: createToken(user.username),
+                token: auth.createToken(user.username),
             };
             delete response.password;
             res.json(response);
