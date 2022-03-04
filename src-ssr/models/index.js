@@ -20,14 +20,14 @@ let sequelize = new Sequelize(
 );
 
 // Test DB Connection
-(async () => {
-    try {
-        await sequelize.authenticate();
-        console.log("Connection has been established successfully.");
-    } catch (error) {
-        console.error("Unable to connect to the database:", error);
-    }
-})();
+// (async () => {
+//     try {
+//         await sequelize.authenticate();
+//         console.log("Connection has been established successfully.");
+//     } catch (error) {
+//         console.error("Unable to connect to the database:", error);
+//     }
+// })();
 
 models.forEach((file) => {
     const model = require("./" + file)(sequelize, Sequelize.DataTypes);
