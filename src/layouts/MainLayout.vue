@@ -14,10 +14,26 @@
                 <q-toolbar-title> Grow Sari </q-toolbar-title>
 
                 <div>v{{ $q.version }}</div>
+                <q-btn
+                    flat
+                    dense
+                    round
+                    icon="add_shopping_cart"
+                    aria-label="Menu"
+                    class="q-ml-md"
+                    @click="toggleRightDrawer"
+                    ><q-badge color="red" floating rounded v-text="itemCount" />
+                </q-btn>
             </q-toolbar>
         </q-header>
 
-        <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
+        <!-- Left Drawer -->
+        <q-drawer
+            ref="cartDrawer"
+            v-model="leftDrawerOpen"
+            show-if-above
+            bordered
+        >
             <q-list
                 bordered
                 padding
@@ -45,6 +61,17 @@
             </q-list>
         </q-drawer>
 
+        <!-- Right Drawer -->
+        <q-drawer
+            v-model="rightDrawerOpen"
+            bordered
+            side="right"
+            persistent="true"
+            elevated
+        >
+            <Cart />
+        </q-drawer>
+
         <q-page-container>
             <router-view />
         </q-page-container>
@@ -53,6 +80,7 @@
 
 <script>
 import EssentialLink from "components/EssentialLink.vue";
+import { mapState } from "vuex";
 
 const mainNavs = [
     {
@@ -97,19 +125,36 @@ export default defineComponent({
 
     components: {
         EssentialLink,
+        Cart: require("components/cart").default,
     },
 
     setup() {
         const leftDrawerOpen = ref(false);
+        const rightDrawerOpen = ref(false);
 
         return {
             mainNavs: mainNavs,
             secondarynavs: secondarynavs,
             leftDrawerOpen,
+            rightDrawerOpen,
             toggleLeftDrawer() {
                 leftDrawerOpen.value = !leftDrawerOpen.value;
             },
+            toggleRightDrawer() {
+                rightDrawerOpen.value = !rightDrawerOpen.value;
+            },
         };
+    },
+
+    computed: {
+        ...mapState(["cart"]),
+        itemCount() {
+            return this.cart.items.length;
+        },
+    },
+
+    mounted() {
+        // this.toggleRightDrawer();
     },
 });
 </script>
