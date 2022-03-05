@@ -118,6 +118,7 @@ export default {
                 id: props.row.id,
                 name: props.row.name,
                 price: props.row.price,
+                description: props.row.description,
             };
             this.$store.dispatch("cart/add", item);
         },

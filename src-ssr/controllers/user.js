@@ -49,4 +49,14 @@ async function get(req, res) {
     }
 }
 
-module.exports = { signin, signup, get };
+async function only(req, res) {
+    const userId = await auth.userId(req, res);
+    try {
+        const result = await User.findByPk(userId);
+        res.json(result);
+    } catch (error) {
+        res.json(error);
+    }
+}
+
+module.exports = { signin, signup, get, only };

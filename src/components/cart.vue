@@ -1,18 +1,22 @@
 <template>
     <section>
-        <div class="q-mt-md"></div>
         <div v-if="isEmpty" class="q-pa-md text-center">
             <h5 class="text-h4 text-weight-light">EMPTY</h5>
+            <span>Choose products</span>
         </div>
-        <q-list v-if="isNotEmpty" bordered separator dense>
+        <q-list v-if="isNotEmpty" bordered separator dense class="q-mt-lg">
             <q-item v-for="item in cart.items" :key="item.id" v-ripple>
                 <q-item-section>
-                    <q-item-label overline>₱{{ item.price }}</q-item-label>
+                    <q-item-label overline>₱{{ item.price }}x1</q-item-label>
                     <q-item-label v-text="item.name" />
-                    <q-item-label caption>x1</q-item-label>
+                    <q-item-label v-text="item.description" caption lines="2" />
                 </q-item-section>
             </q-item>
         </q-list>
+        <div v-if="isNotEmpty" class="q-pa-md q-mt-md">
+            <h4 class="text-h6 q-my-none">Total</h4>
+            <span v-text="total" />
+        </div>
         <div v-if="isNotEmpty" class="action row">
             <q-btn
                 color="primary"
@@ -32,6 +36,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+const _ = require("lodash");
 
 export default {
     name: "ComponentCart",
@@ -43,6 +48,12 @@ export default {
         },
         isNotEmpty() {
             return !this.isEmpty;
+        },
+        total() {
+            var total = _.sumBy(this.cart.items, function (o) {
+                return o.price;
+            });
+            return "₱" + (Math.round(total * 100) / 100).toFixed(2);
         },
     },
 

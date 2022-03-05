@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { date } from "quasar";
+const _ = require("lodash");
 
 const columns = [
     {
@@ -54,12 +54,33 @@ const columns = [
         sortable: false,
     },
     {
-        name: "action",
-        field: "action",
+        required: true,
+        label: "Number of Items",
+        align: "left",
+        field: "OrderProducts",
+        format: (val) => {
+            return val.length;
+        },
+        sortable: false,
     },
+    {
+        required: true,
+        label: "Total",
+        align: "left",
+        field: "OrderProducts",
+        format: (val) => {
+            var total = _.sumBy(val, function (o) {
+                return o.unitPrice;
+            });
+            return "₱" + (Math.round(total * 100) / 100).toFixed(2);
+        },
+        sortable: false,
+    },
+    // {
+    //     name: "action",
+    //     field: "action",
+    // },
 ];
-
-const rows = [];
 
 export default {
     name: "PageOrders",
@@ -74,7 +95,7 @@ export default {
                 // rowsNumber: xx if getting data from a server
             },
             columns,
-            rows,
+            rows: [],
             selected: [],
         };
     },
@@ -82,8 +103,6 @@ export default {
     async mounted() {
         const { data } = await this.$api("/orders");
         this.rows = data;
-
-        console.log(data);
     },
 };
 </script>

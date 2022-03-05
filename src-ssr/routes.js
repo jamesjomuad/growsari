@@ -15,6 +15,8 @@ module.exports = (app, db) => {
 
     app.get("/api/users", auth.verified, controller.User.get);
 
+    app.get("/api/user", auth.verified, controller.User.only);
+
     app.post("/api/product", auth.verified, controller.Product.post);
 
     app.get("/api/products", auth.verified, controller.Product.get);
