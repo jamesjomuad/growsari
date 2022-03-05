@@ -36,7 +36,12 @@ async function get(req, res) {
     // const payload = req.body;
     try {
         const { Orders } = await User.findByPk(userId, {
-            include: [{ model: Order, include: OrderProducts }],
+            include: [
+                {
+                    model: Order,
+                    include: { model: OrderProducts },
+                },
+            ],
         });
 
         res.json(Orders);
