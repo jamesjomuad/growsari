@@ -32,4 +32,4 @@ yarn-error.log*
 *.njsproj
 *.sln
 
-src-ssr/database\.sqlite
+# src-ssr/database\.sqlite
