@@ -1,4 +1,3 @@
-/*
-export function someAction (context) {
+export function add({ commit }, payload) {
+    commit("addItem", payload);
 }
-*/

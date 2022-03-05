@@ -1,4 +1,3 @@
-/*
-export function someMutation (state) {
+export function addItem(state, value) {
+    state.items.push(value);
 }
-*/

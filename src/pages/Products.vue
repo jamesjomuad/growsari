@@ -14,10 +14,10 @@
                 <template #body-cell-action="props">
                     <q-td :props="props">
                         <q-btn
+                            rounded
                             color="secondary"
-                            label="Order"
                             icon="add_shopping_cart"
-                            @click="addOrder(props)"
+                            @click="addToCart(props)"
                         />
                     </q-td>
                 </template>
@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import { mapAction } from "vuex";
+
 const columns = [
     {
         name: "id",
@@ -52,7 +54,7 @@ const columns = [
         align: "left",
         format: (val, row) => {
             if (typeof val != "undefined" && val.length > 50) {
-                return val.slice(0, 80) + "...";
+                return val.slice(0, 50) + "...";
             } else {
                 return val;
             }
@@ -110,21 +112,14 @@ export default {
     },
 
     methods: {
-        async addOrder(props) {
-            try {
-                const result = await this.$api.post("/order", {
-                    id: props.row.id,
-                });
-                this.$q.notify({
-                    message: `Order added!`,
-                    color: "positive",
-                });
-            } catch (error) {
-                this.$q.notify({
-                    message: `Error adding Order!`,
-                    color: "negative",
-                });
-            }
+        // ...mapActiopn(["cart"]),
+        async addToCart(props) {
+            const item = {
+                id: props.row.id,
+                name: props.row.name,
+                price: props.row.price,
+            };
+            this.$store.dispatch("cart/add", item);
         },
     },
 };
