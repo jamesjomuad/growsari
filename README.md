@@ -55,3 +55,15 @@ npx sequelize-cli model:generate --name Order --attributes customerID:integer,cu
 ### Order Details
 
 npx sequelize-cli model:generate --name OrderDetails --attributes orderID:integer,productID:integer,quantity:integer,discount:decimal,unitPrice:integer
+
+### Run Migration
+
+npx sequelize-cli db:migrate
+
+### Reset Migration
+
+npx sequelize-cli db:migrate:undo:all
+
+### Run Seeders
+
+npx sequelize-cli db:seed:all

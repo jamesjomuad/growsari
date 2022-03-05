@@ -30,8 +30,10 @@ export default {
     name: "PageOrders",
 
     async mounted() {
-        const { data } = await this.$api("/product");
+        const { data } = await this.$api("/orders");
         this.rows = data;
+
+        console.log(data);
     },
 };
 </script>

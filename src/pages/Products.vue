@@ -107,7 +107,7 @@ export default {
     },
 
     async mounted() {
-        const { data } = await this.$api("/product");
+        const { data } = await this.$api("/products");
         this.rows = data;
     },
 

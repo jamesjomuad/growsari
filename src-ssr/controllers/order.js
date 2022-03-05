@@ -1,4 +1,4 @@
-const { Product, Order, OrderProducts } = require("../models");
+const { User, Order, OrderProducts } = require("../models");
 const auth = require("../middlewares/auth");
 
 async function add(req, res) {
@@ -7,7 +7,8 @@ async function add(req, res) {
 
     try {
         const newOrder = await Order.create({
-            customerID: userId,
+            userID: userId,
+            comment: "hi",
         });
 
         console.log("newOrder: ", newOrder);
@@ -32,4 +33,16 @@ async function add(req, res) {
     }
 }
 
-module.exports = { add };
+async function get(req, res) {
+    const userId = await auth.userId(req, res);
+    // const payload = req.body;
+    try {
+        const result = await User.findByPk(userId, { include: Order });
+        console.log("Result: ", result);
+        res.json(result);
+    } catch (error) {
+        res.json(error);
+    }
+}
+
+module.exports = { add, get };

@@ -17,7 +17,9 @@ module.exports = (app, db) => {
 
     app.post("/product", auth.verified, controller.Product.post);
 
-    app.get("/product", auth.verified, controller.Product.get);
+    app.get("/products", auth.verified, controller.Product.get);
 
     app.post("/order", auth.verified, controller.Order.add);
+
+    app.get("/orders", auth.verified, controller.Order.get);
 };
