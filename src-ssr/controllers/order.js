@@ -5,19 +5,16 @@ async function add(req, res) {
     const userId = await auth.userId(req, res);
     const payload = req.body;
 
-    Order.OrderProducts = Order.hasMany(OrderProducts);
-    OrderProducts.Order = OrderProducts.belongsTo(Order);
-    OrderProducts.Products = OrderProducts.hasMany(Product);
+    // Order.OrderProducts = Order.hasMany(OrderProducts);
+    // OrderProducts.Order = OrderProducts.belongsTo(Order);
 
     try {
         const result = await Order.create(
             {
                 customerID: 25,
-                OrderProducts: [
-                    { name: "4 Lorem", price: 55.6 },
-                    { name: "5 Lorem", price: 55.6 },
-                    { name: "6 Lorem", price: 55.6 },
-                ],
+                OrderProducts: {
+                    Products: [1, 2, 3, 4, 5, 6],
+                },
             },
             {
                 include: [
