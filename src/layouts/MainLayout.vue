@@ -22,7 +22,7 @@
                     aria-label="Menu"
                     class="q-ml-md"
                     @click="toggleRightDrawer"
-                    ><q-badge color="red" floating transparent> 4 </q-badge>
+                    ><q-badge color="red" floating rounded v-text="itemCount" />
                 </q-btn>
             </q-toolbar>
         </q-header>
@@ -80,6 +80,7 @@
 
 <script>
 import EssentialLink from "components/EssentialLink.vue";
+import { mapState } from "vuex";
 
 const mainNavs = [
     {
@@ -143,6 +144,13 @@ export default defineComponent({
                 rightDrawerOpen.value = !rightDrawerOpen.value;
             },
         };
+    },
+
+    computed: {
+        ...mapState(["cart"]),
+        itemCount() {
+            return this.cart.items.length;
+        },
     },
 
     mounted() {

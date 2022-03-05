@@ -5,8 +5,7 @@ async function add(req, res) {
     const userId = await auth.userId(req, res);
     const payload = req.body;
 
-    // Order.OrderProducts = Order.hasMany(OrderProducts);
-    // OrderProducts.Order = OrderProducts.belongsTo(Order);
+    console.log(payload);
 
     try {
         const result = await Order.create(
@@ -25,8 +24,8 @@ async function add(req, res) {
                 ],
             }
         );
-        res.json(result);
         console.log("result: ", result);
+        res.json(result);
     } catch (error) {
         res.json(error);
     }

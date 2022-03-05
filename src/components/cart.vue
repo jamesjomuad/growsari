@@ -53,12 +53,12 @@ export default {
                     items: this.cart.items,
                 });
                 this.$q.notify({
-                    message: `Order added!`,
+                    message: `Checked out!`,
                     color: "positive",
                 });
             } catch (error) {
                 this.$q.notify({
-                    message: `Error adding Order!`,
+                    message: `Error checking out!`,
                     color: "negative",
                 });
             }

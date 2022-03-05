@@ -3,8 +3,8 @@ const bodyParser = require("body-parser");
 const app = express();
 const cors = require("cors");
 const port = 3000;
-const auth = require("./middlewares/auth");
-const controller = require("./controllers");
+const routes = require("./routes");
+const db = require("./models");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -14,42 +14,9 @@ app.use(
     })
 );
 
-//--------------------------
-//   Home
-//--------------------------
-app.get("/", controller.index);
-
-//--------------------------
-//  User authentication/login
-//--------------------------
-app.post("/auth", controller.User.signin);
-
-//--------------------------
-//   User Signup
-//--------------------------
-app.post("/user", controller.User.signup);
-
-//--------------------------
-//   User Get
-//--------------------------
-app.get("/users", auth.verified, controller.User.get);
-
-//--------------------------
-//   Create Product
-//--------------------------
-app.post("/product", auth.verified, controller.Product.post);
-
-//--------------------------
-//   Get Product
-//--------------------------
-app.get("/product", auth.verified, controller.Product.get);
-
-//--------------------------
-//   Add Order
-//--------------------------
-app.post("/order", auth.verified, controller.Order.add);
+routes(app, db);
 
 // Open the port to public
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
+    console.log(`Listening on port ${port}`);
 });

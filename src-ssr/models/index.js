@@ -19,16 +19,6 @@ let sequelize = new Sequelize(
     config
 );
 
-// Test DB Connection
-// (async () => {
-//     try {
-//         await sequelize.authenticate();
-//         console.log("Connection has been established successfully.");
-//     } catch (error) {
-//         console.error("Unable to connect to the database:", error);
-//     }
-// })();
-
 models.forEach((file) => {
     const model = require("./" + file)(sequelize, Sequelize.DataTypes);
     db[model.name] = model;
@@ -42,5 +32,18 @@ Object.keys(db).forEach((modelName) => {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
+// Relations
+db.Order.hasMany(db.OrderProducts, {
+    foreignKey: "orderID",
+});
+db.OrderProducts.belongsTo(db.Order);
+db.Order.belongsTo(db.User);
+db.User.hasMany(db.Order);
+
+// db.comments.belongsTo(db.posts);
+// db.posts.hasMany(db.comments);
+// db.posts.belongsTo(db.users);
+// db.users.hasMany(db.posts);
 
 module.exports = db;
