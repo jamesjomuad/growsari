@@ -9,13 +9,14 @@ module.exports = (sequelize, DataTypes) => {
             // models.Order.hasMany(models.OrderProducts, {
             //     foreignKey: "orderID",
             // });
-            // models.Order.belongsTo(models.User);
+            models.Order.belongsTo(models.User);
         }
     }
 
     Order.init(
         {
-            customerID: DataTypes.INTEGER,
+            userID: DataTypes.INTEGER,
+            comment: DataTypes.STRING,
         },
         {
             sequelize,

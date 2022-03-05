@@ -11,8 +11,6 @@ async function add(req, res) {
             comment: "hi",
         });
 
-        console.log("newOrder: ", newOrder);
-
         const items = [];
 
         payload.forEach((val, i) => {
