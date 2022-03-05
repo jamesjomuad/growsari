@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     class Product extends Model {
         static associate(models) {
             // define association here
+            // models.Product.belongsTo(models.OrderProducts);
         }
     }
     Product.init(

@@ -34,16 +34,11 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 // Relations
-db.Order.hasMany(db.OrderProducts, {
-    foreignKey: "orderID",
-});
-db.OrderProducts.belongsTo(db.Order);
-db.Order.belongsTo(db.User);
-db.User.hasMany(db.Order);
-
-// db.comments.belongsTo(db.posts);
-// db.posts.hasMany(db.comments);
-// db.posts.belongsTo(db.users);
-// db.users.hasMany(db.posts);
+// db.Order.hasMany(db.OrderProducts, {
+//     foreignKey: "orderID",
+// });
+// db.OrderProducts.belongsTo(db.Order);
+// db.Order.belongsTo(db.User);
+// db.User.hasMany(db.Order);
 
 module.exports = db;

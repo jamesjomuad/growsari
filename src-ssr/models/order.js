@@ -6,6 +6,9 @@ module.exports = (sequelize, DataTypes) => {
     class Order extends Model {
         static associate(models) {
             // define association here
+            // models.Order.hasMany(models.OrderProducts, {
+            //     foreignKey: "orderID",
+            // });
         }
     }
 

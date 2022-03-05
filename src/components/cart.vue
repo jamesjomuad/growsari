@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
     name: "ComponentCart",
@@ -47,15 +47,17 @@ export default {
     },
 
     methods: {
+        ...mapActions(["cart"]),
         async checkout() {
             try {
-                const result = await this.$api.post("/order", {
-                    items: this.cart.items,
-                });
-                this.$q.notify({
-                    message: `Checked out!`,
-                    color: "positive",
-                });
+                const result = await this.$api.post("/order", this.cart.items);
+                if (result.data) {
+                    this.$q.notify({
+                        message: `Checked out!`,
+                        color: "positive",
+                    });
+                    this.clear();
+                }
             } catch (error) {
                 this.$q.notify({
                     message: `Error checking out!`,
