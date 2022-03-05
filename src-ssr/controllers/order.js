@@ -35,9 +35,11 @@ async function get(req, res) {
     const userId = await auth.userId(req, res);
     // const payload = req.body;
     try {
-        const result = await User.findByPk(userId, { include: Order });
-        console.log("Result: ", result);
-        res.json(result);
+        const { Orders } = await User.findByPk(userId, {
+            include: [{ model: Order, include: OrderProducts }],
+        });
+
+        res.json(Orders);
     } catch (error) {
         res.json(error);
     }

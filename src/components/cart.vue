@@ -53,7 +53,7 @@ export default {
                 const result = await this.$api.post("/order", this.cart.items);
                 if (result.data) {
                     this.$q.notify({
-                        message: `Checked out!`,
+                        message: `Checked out successfuly!`,
                         color: "positive",
                     });
                     this.clear();

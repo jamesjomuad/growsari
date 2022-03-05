@@ -5,7 +5,7 @@ import axios from "axios";
 const token = LocalStorage.getItem("jwt");
 const config = {
     headers: { Authorization: `Bearer ${token}` },
-    baseURL: "http://localhost:3000",
+    baseURL: "http://localhost:3000/api",
 };
 
 const api = axios.create(config);

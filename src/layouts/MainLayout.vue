@@ -111,7 +111,7 @@ const secondarynavs = [
         link: "/inventory",
     },
     {
-        title: "User",
+        title: "Profile",
         caption: "Manage user settings",
         icon: "account_circle",
         link: "/user",
