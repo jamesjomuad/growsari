@@ -1,7 +1,10 @@
 <template>
     <section>
-        <div class="q-my-md"></div>
-        <q-list v-if="isNotEmpty" bordered separator>
+        <div class="q-mt-md"></div>
+        <div v-if="isEmpty" class="q-pa-md text-center">
+            <h5 class="text-h4 text-weight-light">EMPTY</h5>
+        </div>
+        <q-list v-if="isNotEmpty" bordered separator dense>
             <q-item v-for="item in cart.items" :key="item.id" v-ripple>
                 <q-item-section>
                     <q-item-label overline>₱{{ item.price }}</q-item-label>
@@ -10,8 +13,19 @@
                 </q-item-section>
             </q-item>
         </q-list>
-        <div v-if="isNotEmpty" class="action q-pa-md">
-            <q-btn color="primary" class="full-width" label="Checkout"></q-btn>
+        <div v-if="isNotEmpty" class="action row">
+            <q-btn
+                color="primary"
+                class="col q-ma-sm"
+                label="Checkout"
+                @click="checkout"
+            ></q-btn>
+            <q-btn
+                color="info"
+                class="col q-ma-sm"
+                label="Clear"
+                @click="clear"
+            ></q-btn>
         </div>
     </section>
 </template>
@@ -33,7 +47,25 @@ export default {
     },
 
     methods: {
-        checkout() {},
+        async checkout() {
+            try {
+                const result = await this.$api.post("/order", {
+                    items: this.cart.items,
+                });
+                this.$q.notify({
+                    message: `Order added!`,
+                    color: "positive",
+                });
+            } catch (error) {
+                this.$q.notify({
+                    message: `Error adding Order!`,
+                    color: "negative",
+                });
+            }
+        },
+        clear() {
+            this.$store.dispatch("cart/clear");
+        },
     },
 };
 </script>

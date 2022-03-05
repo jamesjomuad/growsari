@@ -8,6 +8,8 @@ module.exports = (sequelize, DataTypes) => {
             // define association here
             // this.Order = this.belongsTo(models.Order);
             // this.Products = this.hasMany(models.Product);
+            this.belongsTo(models.Order);
+            this.hasMany(models.Product);
         }
     }
     OrderProducts.init(
