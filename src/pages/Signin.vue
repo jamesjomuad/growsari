@@ -67,8 +67,8 @@ export default {
     name: "PageSignin",
     data() {
         return {
-            username: "username",
-            password: "password",
+            username: "james",
+            password: "james",
         };
     },
 

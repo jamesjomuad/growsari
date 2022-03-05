@@ -17,9 +17,9 @@ async function signin(req, res) {
             };
             delete response.password;
             res.json(response);
+        } else {
+            return res.sendStatus(403);
         }
-
-        throw "no match!";
     } catch (error) {
         console.error(error);
         res.json(error);

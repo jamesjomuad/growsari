@@ -3,17 +3,23 @@ import { api } from "boot/axios";
 import { LocalStorage } from "quasar";
 
 export async function signinUser({ commit }, payload) {
-    const { data } = await api.post("/auth", payload);
-
-    if (data) {
-        commit("setUser", data);
-        commit("setToken", data.token);
-        LocalStorage.set("jwt", data.token);
+    try {
+        const { data } = await api.post("/auth", payload);
+        if (data.token) {
+            commit("setUser", data);
+            commit("setToken", data.token);
+            LocalStorage.set("jwt", data.token);
+            Notify.create({
+                message: `Welcome ${data.username}`,
+                color: "orange",
+            });
+            this.$router.push("/");
+        }
+    } catch (error) {
         Notify.create({
-            message: `Welcome ${data.username}`,
-            color: "orange",
+            message: "Try again!",
+            color: "negative",
         });
-        this.$router.push("/");
     }
 }
 
