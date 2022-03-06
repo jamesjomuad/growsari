@@ -13,9 +13,11 @@
                 </q-item-section>
             </q-item>
         </q-list>
-        <div v-if="isNotEmpty" class="q-pa-md q-mt-md">
+        <div v-if="isNotEmpty" class="q-pa-md">
             <h4 class="text-h6 q-my-none">Total</h4>
             <span v-text="total" />
+            <h4 class="text-h6 q-my-none q-mt-md">Notes</h4>
+            <q-input v-model="notes" filled type="textarea" />
         </div>
         <div v-if="isNotEmpty" class="action row">
             <q-btn
@@ -41,6 +43,12 @@ const _ = require("lodash");
 export default {
     name: "ComponentCart",
 
+    data() {
+        return {
+            notes: "",
+        };
+    },
+
     computed: {
         ...mapState(["cart"]),
         isEmpty() {
@@ -61,7 +69,10 @@ export default {
         ...mapActions(["cart"]),
         async checkout() {
             try {
-                const result = await this.$api.post("/order", this.cart.items);
+                const result = await this.$api.post("/order", {
+                    items: this.cart.items,
+                    notes: this.notes,
+                });
                 if (result.data) {
                     this.$q.notify({
                         message: `Checked out successfuly!`,

@@ -8,12 +8,12 @@ async function add(req, res) {
     try {
         const newOrder = await Order.create({
             userID: userId,
-            comment: "hi",
+            comment: payload.notes,
         });
 
         const items = [];
 
-        payload.forEach((val, i) => {
+        payload.items.forEach((val, i) => {
             items.push({
                 orderID: newOrder.dataValues.id,
                 productID: val.id,

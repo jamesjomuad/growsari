@@ -2,26 +2,26 @@
 
 const auth = require("./middlewares/auth");
 
-const controller = require("./controllers");
+const { User, Product, Order } = require("./controllers");
 
 module.exports = (app, db) => {
     app.get("/api/", (req, res) => {
         res.send("Hello World!");
     });
 
-    app.post("/api/auth", controller.User.signin);
+    app.post("/api/auth", User.signin);
 
-    app.post("/api/user", controller.User.signup);
+    app.post("/api/user", User.signup);
 
-    app.get("/api/users", auth.verified, controller.User.get);
+    app.get("/api/users", auth.verified, User.get);
 
-    app.get("/api/user", auth.verified, controller.User.only);
+    app.get("/api/user", auth.verified, User.only);
 
-    app.post("/api/product", auth.verified, controller.Product.post);
+    app.post("/api/product", auth.verified, Product.post);
 
-    app.get("/api/products", auth.verified, controller.Product.get);
+    app.get("/api/products", auth.verified, Product.get);
 
-    app.post("/api/order", auth.verified, controller.Order.add);
+    app.post("/api/order", auth.verified, Order.add);
 
-    app.get("/api/orders", auth.verified, controller.Order.get);
+    app.get("/api/orders", auth.verified, Order.get);
 };

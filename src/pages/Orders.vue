@@ -6,8 +6,6 @@
                 :rows="rows"
                 :columns="columns"
                 row-key="id"
-                selection="multiple"
-                v-model:selected="selected"
                 :pagination="initialPagination"
             >
                 <template #body-cell-action="props">
