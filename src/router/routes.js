@@ -8,9 +8,11 @@ function isAuthenticated(to, from, next) {
         isAuthenticated = true;
     }
 
-    if (isAuthenticated) next();
-
-    next("/signin");
+    if (isAuthenticated) {
+        next();
+    } else {
+        next("/signin");
+    }
 }
 
 const routes = [
