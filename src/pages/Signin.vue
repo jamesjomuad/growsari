@@ -9,8 +9,13 @@
                 <h5 class="text-h5 text-white q-my-md">Grow Sari</h5>
             </div>
             <div class="row">
-                <q-card bordered class="q-pa-lg shadow-24" style="width: 350px">
-                    <q-form class="q-gutter-md" @submit.prevent="login">
+                <q-card
+                    bordered
+                    class="q-pa-lg shadow-24"
+                    style="width: 350px"
+                    key="signin"
+                >
+                    <q-form class="q-gutter-md" @submit.prevent="signin">
                         <q-card-section>
                             <q-input
                                 square
@@ -56,19 +61,25 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
     name: "PageSignin",
     data() {
         return {
-            username: "username",
-            password: "password",
+            username: "james",
+            password: "james",
         };
     },
 
     methods: {
-        login() {
-            // this.$axios
-            console.log("login");
+        ...mapActions("auth", ["signinUser"]),
+
+        async signin() {
+            this.signinUser({
+                username: this.username,
+                password: this.password,
+            });
         },
     },
 };

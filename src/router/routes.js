@@ -1,9 +1,13 @@
-import { LocalStorage, SessionStorage } from "quasar";
+import { LocalStorage } from "quasar";
+const Buffer = require("buffer/").Buffer;
 
-function authenticated(to, from, next) {
+function isAuthenticated(to, from, next) {
     var isAuthenticated = false;
-    if (LocalStorage.getItem("LoggedUser")) isAuthenticated = true;
-    else isAuthenticated = false;
+
+    if (LocalStorage.getItem("jwt") && LocalStorage.getItem("jwt").length) {
+        isAuthenticated = true;
+    }
+
     if (isAuthenticated) {
         next();
     } else {
@@ -14,7 +18,7 @@ function authenticated(to, from, next) {
 const routes = [
     {
         path: "/",
-        beforeEnter: authenticated,
+        beforeEnter: isAuthenticated,
         component: () => import("layouts/MainLayout.vue"),
         children: [
             {

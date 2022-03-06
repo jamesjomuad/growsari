@@ -14,10 +14,26 @@
                 <q-toolbar-title> Grow Sari </q-toolbar-title>
 
                 <div>v{{ $q.version }}</div>
+                <q-btn
+                    flat
+                    dense
+                    round
+                    icon="add_shopping_cart"
+                    aria-label="Menu"
+                    class="q-ml-md"
+                    @click="toggleRightDrawer"
+                    ><q-badge color="red" floating rounded v-text="itemCount" />
+                </q-btn>
             </q-toolbar>
         </q-header>
 
-        <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
+        <!-- Left Drawer -->
+        <q-drawer
+            ref="cartDrawer"
+            v-model="leftDrawerOpen"
+            show-if-above
+            bordered
+        >
             <q-list
                 bordered
                 padding
@@ -42,7 +58,28 @@
                     :key="link.title"
                     v-bind="link"
                 />
+                <q-item clickable tag="a" @click="signout">
+                    <q-item-section avatar>
+                        <q-icon name="logout" />
+                    </q-item-section>
+
+                    <q-item-section>
+                        <q-item-label>Logout</q-item-label>
+                        <q-item-label caption> </q-item-label>
+                    </q-item-section>
+                </q-item>
             </q-list>
+        </q-drawer>
+
+        <!-- Right Drawer -->
+        <q-drawer
+            v-model="rightDrawerOpen"
+            bordered
+            side="right"
+            persistent
+            elevated
+        >
+            <CartComponent />
         </q-drawer>
 
         <q-page-container>
@@ -53,6 +90,7 @@
 
 <script>
 import EssentialLink from "components/EssentialLink.vue";
+import { mapState } from "vuex";
 
 const mainNavs = [
     {
@@ -67,12 +105,12 @@ const mainNavs = [
         icon: "shopping_bag",
         link: "/products",
     },
-    {
-        title: "Customers",
-        caption: "Product listings",
-        icon: "supervised_user_circle",
-        link: "/customers",
-    },
+    // {
+    //     title: "Customers",
+    //     caption: "Product listings",
+    //     icon: "supervised_user_circle",
+    //     link: "/customers",
+    // },
 ];
 
 const secondarynavs = [
@@ -83,7 +121,7 @@ const secondarynavs = [
         link: "/inventory",
     },
     {
-        title: "User",
+        title: "Profile",
         caption: "Manage user settings",
         icon: "account_circle",
         link: "/user",
@@ -97,19 +135,40 @@ export default defineComponent({
 
     components: {
         EssentialLink,
+        CartComponent: require("components/cart").default,
     },
 
     setup() {
         const leftDrawerOpen = ref(false);
+        const rightDrawerOpen = ref(false);
 
         return {
             mainNavs: mainNavs,
             secondarynavs: secondarynavs,
             leftDrawerOpen,
+            rightDrawerOpen,
             toggleLeftDrawer() {
                 leftDrawerOpen.value = !leftDrawerOpen.value;
             },
+            toggleRightDrawer() {
+                rightDrawerOpen.value = !rightDrawerOpen.value;
+            },
         };
+    },
+
+    computed: {
+        ...mapState(["cart"]),
+        itemCount() {
+            return this.cart.items.length;
+        },
+    },
+
+    methods: {
+        signout() {
+            this.$store.dispatch("auth/destroy");
+            this.$router.push("/signin");
+            this.$q.notify("Your signed out");
+        },
     },
 });
 </script>
