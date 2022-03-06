@@ -52,7 +52,9 @@ async function get(req, res) {
 async function only(req, res) {
     const userId = await auth.userId(req, res);
     try {
-        const result = await User.findByPk(userId);
+        const result = await User.findByPk(userId, {
+            attributes: ["id", "fullName", "email", "username"],
+        });
         res.json(result);
     } catch (error) {
         res.json(error);

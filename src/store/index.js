@@ -4,6 +4,7 @@ import createPersistedState from "vuex-persistedstate";
 import { LocalStorage } from "quasar";
 import auth from "./auth";
 import cart from "./cart";
+import user from "./user";
 
 /*
  * If not building with SSR mode, you can
@@ -19,6 +20,7 @@ export default store(function (/* { ssrContext } */) {
         modules: {
             auth,
             cart,
+            user,
         },
 
         plugins: [

@@ -4,38 +4,46 @@
         <q-form class="q-gutter-md">
             <q-input
                 outlined
-                v-model="text"
+                v-model="user.username"
                 label="Username"
                 stack-label
                 :dense="dense"
             />
             <q-input
                 outlined
-                v-model="text"
+                v-model="user.fullName"
                 label="Full Name"
                 stack-label
                 :dense="dense"
             />
             <q-input
                 outlined
-                v-model="text"
+                v-model="user.email"
                 label="Email"
                 stack-label
                 :dense="dense"
             />
         </q-form>
-        <pre v-text="auth"></pre>
     </q-page>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
     name: "PageUser",
 
     computed: {
         ...mapState(["auth"]),
+        ...mapState(["user"]),
+    },
+
+    mounted() {
+        this.get();
+    },
+
+    methods: {
+        ...mapActions("user", ["get"]),
     },
 };
 </script>
