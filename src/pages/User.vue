@@ -24,7 +24,9 @@
                     />
                 </q-form>
             </div>
-            <div class="col"></div>
+            <div class="col q-pa-md">
+                <pre>{{ user }}</pre>
+            </div>
         </div>
     </q-page>
 </template>
@@ -42,7 +44,6 @@ export default {
 
     mounted() {
         this.get();
-        console.log(this.user);
     },
 
     methods: {
