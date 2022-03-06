@@ -1,5 +1,5 @@
 import { ssrMiddleware } from "quasar/wrappers";
-// require("../server.js");
+require("../server.js");
 
 // This middleware should execute as last one
 // since it captures everything and tries to

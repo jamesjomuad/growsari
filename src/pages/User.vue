@@ -42,6 +42,7 @@ export default {
 
     mounted() {
         this.get();
+        console.log(this.user);
     },
 
     methods: {

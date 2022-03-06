@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState } from "vuex";
 const _ = require("lodash");
 
 export default {
@@ -66,7 +66,6 @@ export default {
     },
 
     methods: {
-        ...mapActions(["cart"]),
         async checkout() {
             try {
                 const result = await this.$api.post("/order", {
