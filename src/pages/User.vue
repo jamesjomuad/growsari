@@ -1,29 +1,31 @@
 <template>
     <q-page padding>
         <!-- content -->
-        <q-form class="q-gutter-md">
-            <q-input
-                outlined
-                v-model="user.username"
-                label="Username"
-                stack-label
-                :dense="dense"
-            />
-            <q-input
-                outlined
-                v-model="user.fullName"
-                label="Full Name"
-                stack-label
-                :dense="dense"
-            />
-            <q-input
-                outlined
-                v-model="user.email"
-                label="Email"
-                stack-label
-                :dense="dense"
-            />
-        </q-form>
+        <div class="row">
+            <div class="col">
+                <q-form class="q-gutter-md">
+                    <q-input
+                        outlined
+                        v-model="user.username"
+                        label="Username"
+                        stack-label
+                    />
+                    <q-input
+                        outlined
+                        v-model="user.fullName"
+                        label="Full Name"
+                        stack-label
+                    />
+                    <q-input
+                        outlined
+                        v-model="user.email"
+                        label="Email"
+                        stack-label
+                    />
+                </q-form>
+            </div>
+            <div class="col"></div>
+        </div>
     </q-page>
 </template>
 

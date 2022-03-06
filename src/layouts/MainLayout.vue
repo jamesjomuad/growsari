@@ -105,12 +105,12 @@ const mainNavs = [
         icon: "shopping_bag",
         link: "/products",
     },
-    {
-        title: "Customers",
-        caption: "Product listings",
-        icon: "supervised_user_circle",
-        link: "/customers",
-    },
+    // {
+    //     title: "Customers",
+    //     caption: "Product listings",
+    //     icon: "supervised_user_circle",
+    //     link: "/customers",
+    // },
 ];
 
 const secondarynavs = [
