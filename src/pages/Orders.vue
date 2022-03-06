@@ -23,6 +23,7 @@
 </template>
 
 <script>
+const moment = require("moment");
 const _ = require("lodash");
 
 const columns = [
@@ -47,7 +48,7 @@ const columns = [
         align: "left",
         field: "createdAt",
         format: (val) => {
-            return new Date(val).toUTCString();
+            return moment(val).calendar() + " / " + moment(val).fromNow();
         },
         sortable: false,
     },
@@ -74,10 +75,6 @@ const columns = [
         },
         sortable: false,
     },
-    // {
-    //     name: "action",
-    //     field: "action",
-    // },
 ];
 
 export default {

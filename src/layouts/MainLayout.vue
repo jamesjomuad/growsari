@@ -76,10 +76,10 @@
             v-model="rightDrawerOpen"
             bordered
             side="right"
-            persistent="true"
+            persistent
             elevated
         >
-            <Cart />
+            <CartComponent />
         </q-drawer>
 
         <q-page-container>
@@ -135,7 +135,7 @@ export default defineComponent({
 
     components: {
         EssentialLink,
-        Cart: require("components/cart").default,
+        CartComponent: require("components/cart").default,
     },
 
     setup() {
