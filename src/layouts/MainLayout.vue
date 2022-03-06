@@ -58,6 +58,16 @@
                     :key="link.title"
                     v-bind="link"
                 />
+                <q-item clickable tag="a" @click="signout">
+                    <q-item-section avatar>
+                        <q-icon name="logout" />
+                    </q-item-section>
+
+                    <q-item-section>
+                        <q-item-label>Logout</q-item-label>
+                        <q-item-label caption> </q-item-label>
+                    </q-item-section>
+                </q-item>
             </q-list>
         </q-drawer>
 
@@ -153,8 +163,12 @@ export default defineComponent({
         },
     },
 
-    mounted() {
-        // this.toggleRightDrawer();
+    methods: {
+        signout() {
+            this.$store.dispatch("auth/destroy");
+            this.$router.push("/signin");
+            this.$q.notify("Your signed out");
+        },
     },
 });
 </script>
